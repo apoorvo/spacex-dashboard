@@ -23,6 +23,7 @@ export const fetchLaunchesError = () =>{
 export const fetchLaunches = ({queryBody,page})=>{
     return function(dispatch){
         dispatch(fetchLaunchesRequest())
+        console.log(queryBody)
         axios.post('https://api.spacexdata.com/v4/launches/query',{
         query: queryBody,
         // If sorting and limit needs to updated moving forward options can also be taken from the dispatcher. 
