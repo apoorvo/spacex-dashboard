@@ -7,7 +7,7 @@
 
 //Simillarly the filter combination success+past launches or failed + past launches
 //will be achieved by by just applying the success filter
-const filterNames = ["success", "upcoming"]
+export const filterNames = ["success", "upcoming"]
 
 export const getQueryFromUrl = (range, searchObj)=>{
     let rangeApplied = {}
@@ -34,7 +34,7 @@ export const getQueryFromUrl = (range, searchObj)=>{
             }
         })
     }
-
+    console.log(`Filter applied: ${filterApplied}`)
     return {...rangeApplied, ...filterApplied}
 }
 
