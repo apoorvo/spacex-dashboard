@@ -26,12 +26,17 @@ export const fetchLaunches = ({queryBody,page})=>{
         console.log(queryBody)
         axios.post('https://api.spacexdata.com/v4/launches/query',{
         query: queryBody,
-        // If sorting and limit needs to updated moving forward options can also be taken from the dispatcher. 
-        // For now there is no such requirment.
+        
+        //Query has been updated to populate specific fields and select only required fields.
         options:{
+            select:["date_utc","date_unix","success","upcoming", "flight_number", "name","details", "links"],
             limit: 12,
-            page: page,
-            sort: {date_unix:"desc"}
+            page: page, 
+            populate:[
+                {path: "payloads", options:{select:["orbit","manufacturers","nationalities","type"]}},
+                {path: "launchpad",options:{select:["name"]}},
+                {path:"rocket", options:{select: ["name","type"]}}
+            ]
         }
         })
         .then((res)=>{

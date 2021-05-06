@@ -7,6 +7,8 @@ import {checkUrlValidity, getQueryFromUrl, filterNames} from "./helpers"
 import Filters from "./Filters"
 import DisplayRecords from "./DisplayRecords"
 import DatePickerDisplay from "./DatePickerDisplay"
+import Pagination from './Pagination';
+
 import { Container } from '@material-ui/core';
 import Header from './Header';
 
@@ -46,7 +48,8 @@ function Dashboard() {
             search : searchObj.toString()
         })
     }else{
-        dispatch(fetchLaunches({queryBody:getQueryFromUrl(range, searchObj),page:page?page:1 }))
+        const queryBody = getQueryFromUrl(range, searchObj)
+        dispatch(fetchLaunches({queryBody,page:page?page:1 }))
     }
     filterNames.forEach((filterName)=>{
         if(searchObj.has(filterName)){
@@ -119,8 +122,12 @@ function Dashboard() {
       })
   }
 
-  
-
+  const handlePageClick = (page)=>{
+        history.push({
+            pathname: `/${page}/${range?range:""}`,
+            search: searchObj.toString()
+        })
+  }
   return (
     //Displaying the data that is fetched after infering the query from the URL.
     <div className="dashboard">
@@ -130,8 +137,9 @@ function Dashboard() {
                 <DatePickerDisplay rangePicker={rangePicker} handleRangeChange={handleRangeChange}/>
                 <Filters filterSelected={filterSelected} handleSelect={handleSelect}/>
             </div>
+            
             <DisplayRecords launches={launchesState.launches} isLoading={launchesState.isLoading} hasError={launchesState.hasError}/>
-
+            <Pagination currentPage={page} totalPages={launchesState.totalPages} isLoading={launchesState.isLoading} hasError={launchesState.hasError} handlePageClick={handlePageClick}/>
         </div>
     </div>
         

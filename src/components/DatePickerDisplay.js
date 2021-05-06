@@ -58,8 +58,8 @@ function DatePickerDisplay({rangePicker, handleRangeChange, handleClearRange}) {
     const [open, setOpen] = useState(false)
 
     //Extracting labels from ranges
-    const staticLabels = staticRanges.map((range)=>{
-        return <option value={range.label}>{range.label}</option>
+    const staticLabels = staticRanges.map((range, index)=>{
+        return <option value={range.label} key={index}>{range.label}</option>
     })
 
     //State to control the dropdown for selected range
