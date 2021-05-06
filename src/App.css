@@ -33,3 +33,42 @@
     border: 0;
     margin-bottom: 20px;
 }
+
+.data_table{
+    width: 100%;
+    border-radius: 26px;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+
+
+.data_table th{
+    background-color:#005288;
+    color: White;
+    padding: 10px;
+}
+
+
+.data_table td{
+    padding: 10px;
+}
+
+
+.pagination button{
+    background-color: white;
+    border: 1px solid black;
+    padding:5px 10px 5px 10px;
+    border-radius: 6px;
+}
+
+.pageBtn{
+    background-color: white;
+    border: 1px solid #005288;
+    color: #005288;
+}
+
+.currentPageBtn{
+    background-color: #005288;
+    color: white;
+}
