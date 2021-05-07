@@ -31,18 +31,25 @@ export const fetchLaunches = ({queryBody,page})=>{
         options:{
             select:["date_utc","date_unix","success","upcoming", "flight_number", "name","details", "links"],
             limit: 12,
-            page: page, 
+            page: page,
             populate:[
-                {path: "payloads", options:{select:["orbit","manufacturers","nationalities","type"]}},
-                {path: "launchpad",options:{select:["name"]}},
-                {path:"rocket", options:{select: ["name","type"]}}
-            ]
+                {path: "payloads"},
+                {path: "launchpad"},
+                {path: "rocket"}
+            ] 
+            // populate:[
+            //     {path: "payloads", options:{select:["orbit","manufacturers","nationalities","type"]}},
+            //     {path: "launchpad",options:{select:["name"]}},
+            //     {path:"rocket", options:{select: ["name","type"]}}
+            // ]
         }
         })
         .then((res)=>{
             dispatch(fetchLaunchesSuccess(res.data))
         })
-        .catch((err)=> dispatch(fetchLaunchesError()))
+        .catch((err)=> {
+            console.log(err)
+            dispatch(fetchLaunchesError())})
     }
     
 }

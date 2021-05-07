@@ -69,7 +69,7 @@ function DatePickerDisplay({rangePicker, handleRangeChange, handleClearRange}) {
     //Functionality to set state of the dropdown
     //before calling handleRangeChange to set URL
     const handleRange = (selection)=>{
-        setOpen(false)
+        handleRangeChange(selection)
         let labelChanged = false
         staticRanges.forEach((range)=>{
             if(range.isSelected(selection)){
@@ -80,7 +80,6 @@ function DatePickerDisplay({rangePicker, handleRangeChange, handleClearRange}) {
         if(!labelChanged){
             setCurrentLabel("custom")
         }
-        handleRangeChange(selection)
     }
 
     const handleClose = ()=>{
@@ -105,7 +104,8 @@ function DatePickerDisplay({rangePicker, handleRangeChange, handleClearRange}) {
             <Modal
                 open={open}
                 onClose = {handleClose}
-            >
+                className="dateModal"
+                >
                 <DateRangePicker 
                     onChange={(item)=>{handleRange(item.selection)}}
                     showSelectionPreview = {true}
