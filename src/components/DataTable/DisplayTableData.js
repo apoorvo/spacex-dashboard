@@ -1,6 +1,22 @@
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useTable } from 'react-table'
+import LaunchDisplay from './LaunchDisplay'
 
 function DisplayTableData({columns, data, isLoading, hasError}){
+
+    //A basic react-table compliant component that renders out our main table.
+    const [openLaunch,setOpenLaunch] = useState(false)
+    const [currentLaunch, setCurrentLaunch] = useState("")
+
+    const onCloseLaunch = ()=>{
+        setOpenLaunch(false)
+    }
+
+    const handleRowCLick= (launch)=>{
+        setCurrentLaunch(launch)
+        setOpenLaunch(true)
+    }
 
     const tableInstance = useTable({
         columns,
@@ -17,6 +33,9 @@ function DisplayTableData({columns, data, isLoading, hasError}){
 
     return(
         <>
+        {!isLoading && currentLaunch?
+        <LaunchDisplay open={openLaunch} onClose={onCloseLaunch} launchData={currentLaunch} isLoading={isLoading}/>:
+            ""}
         <table  {...getTableProps()} className="data_table">
             <thead >
                 {
@@ -41,7 +60,7 @@ function DisplayTableData({columns, data, isLoading, hasError}){
                     rows.map((row)=>{
                         prepareRow(row)
                         return (
-                            <tr {...row.getRowProps()}>
+                            <tr {...row.getRowProps()} onClick={()=>{handleRowCLick(row.original)}} >
                                 {
                                     row.cells.map((cell)=>{
                                         return(
