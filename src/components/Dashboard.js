@@ -52,8 +52,9 @@ function Dashboard() {
     }
     filterNames.forEach((filterName)=>{
         if(searchObj.has(filterName)){
-            console.log("Filtering")
             setFilterSelected(`${filterName}_${searchObj.get(filterName)}`)
+        }else if(!searchObj.toString()){
+            setFilterSelected("")
         }
     })
   }, [page, range, location.search])

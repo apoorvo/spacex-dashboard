@@ -21,6 +21,9 @@ function DisplayRecords({launches, isLoading, hasError}){
           }else{
             newRow.success_label= newRow.success? "Succesful": "Failure"
           }
+          let [date,time] = newRow.date_utc.split("T")
+          time = time.split(":").slice(0,2).join(":")
+          newRow.date_utc = `${date}  ${time}`
           return newRow 
       })
       return rowData

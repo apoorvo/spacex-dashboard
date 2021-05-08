@@ -1,10 +1,23 @@
+import { CircularProgress, makeStyles, Typography } from '@material-ui/core'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useTable } from 'react-table'
 import LaunchDisplay from './LaunchDisplay'
 
+const useStyles = makeStyles({
+    progressRoot:{
+        position: "absolute",
+        top: "45%",
+        left: "48%"
+    },
+    noResultRoot:{
+        fontWeight: 400,
+    }
+})
+
 function DisplayTableData({columns, data, isLoading, hasError}){
 
+    const classes = useStyles()
     //A basic react-table compliant component that renders out our main table.
     const [openLaunch,setOpenLaunch] = useState(false)
     const [currentLaunch, setCurrentLaunch] = useState("")
@@ -33,10 +46,9 @@ function DisplayTableData({columns, data, isLoading, hasError}){
 
     return(
         <>
-        {!isLoading && currentLaunch?
-        <LaunchDisplay open={openLaunch} onClose={onCloseLaunch} launchData={currentLaunch} isLoading={isLoading}/>:
-            ""}
-        <table  {...getTableProps()} className="data_table">
+        <LaunchDisplay open={openLaunch} onClose={onCloseLaunch} launchData={currentLaunch} isLoading={isLoading} />
+        <table style={{minHeight: "500px"}}  
+        {...getTableProps()} className="data_table">
             <thead >
                 {
                     headerGroups.map((headerGroup)=>{
@@ -56,8 +68,9 @@ function DisplayTableData({columns, data, isLoading, hasError}){
                 }
             </thead>
             <tbody {...getTableBodyProps()}>
+                
                 { !isLoading?
-                    rows.map((row)=>{
+                   rows.map((row)=>{
                         prepareRow(row)
                         return (
                             <tr {...row.getRowProps()} onClick={()=>{handleRowCLick(row.original)}} >
@@ -72,17 +85,63 @@ function DisplayTableData({columns, data, isLoading, hasError}){
                                 }
                             </tr>
                         )
-                    }):
-                    "Loading..."
+                    }
+                        
+                    ):
+                    
+                    <CircularProgress classes={{
+                        root:classes.progressRoot
+                    }} thickness={6} size={60}/>
                 }
-                {hasError? "Error fetching the data":""}
                 
-            </tbody>
+                <MessageBoard rowsLength={rows.length} isLoading={isLoading} hasError={hasError} columnsLength={columns.length} classes={classes.noResultRoot}/>
+                
+            </tbody>      
         </table>
         </>
     )
   }
 
  
+function MessageBoard({rowsLength, isLoading, hasError, columnsLength, classes}){
+    if(!isLoading){
+        if(hasError){
+            return(
+                <tr>
+                    <td colSpan={columnsLength} valign="top" align="center">
+                    <Typography
+                        variant="h6"
+                        component="h6"
+                        classes={{h6:classes}}
+                    >
+                        Error fetching records.
+                    </Typography>
+                    </td>
+                </tr>
+            )
+        }else if(rowsLength<=0){
+            return(
+                <tr>
+                    <td colSpan={columnsLength} valign="top" align="center">
+                    <Typography
+                        variant="h6"
+                        component="h6"
+                        classes={{h6:classes}}
+                    >
+                        No results found for the specified filter
+                    </Typography>
+                    </td>
+                </tr>
+            )
+        }else{
+            return ""
+        }
+    }else{
+        return ""
+    }
+
+   
+        
+}
 
 export default DisplayTableData
