@@ -43,7 +43,6 @@ export const checkUrlValidity = function(page, range){
     let pageNew = page
     let rangeNew = range
     if(!parseInt(page)){
-        console.log("Not an int")
         isValid = false
         pageNew = 1
     }
