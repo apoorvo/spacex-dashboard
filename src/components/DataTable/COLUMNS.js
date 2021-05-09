@@ -23,7 +23,7 @@ const COLUMNS = [
     },
     {
       Header: 'Success',
-      accessor:'success_label'
+      accessor:'successLabel'
     },
     {
       Header: 'Rocket',
