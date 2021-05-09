@@ -1,10 +1,113 @@
-import { Modal } from '@material-ui/core'
+import { makeStyles, Modal,Paper } from '@material-ui/core'
 import {useMemo} from 'react'
 import { useTable } from 'react-table'
 import COLUMNS_LAUNCH from './COLUMNS_LAUNCH'
 
-function LaunchDisplay({open, onClose, launchData, isLoading}) {
 
+const useStyles = makeStyles((theme)=>({
+    '@global':{
+        '*::-webkit-scrollbar':{
+            width:"0.5em",
+        },
+        '*::-webkit-scrollbar-track': {
+            '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
+        },
+        '*::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgba(0,0,0,.1)',
+            outline: '1px solid slategrey',
+          }
+    },
+    launchView:{
+        color: theme.palette.primary.main,
+        fontFamily: theme.typography.fontFamily,
+        width: "500px",
+        maxHeight: "600px",
+        overflowY:"auto",
+        backgroundColor: "white",
+        border: "1px solid white",
+        margin: "auto",
+        marginTop: "20px",
+        padding:"10px",
+        borderRadius: "10px",
+        outline:"none",
+    },
+    headerView:{
+        width: "90%",
+        margin:"auto",
+        display: "flex",
+        minHeight: "100px",
+        boxShadow: "0px",
+        marginTop: "10px",
+        paddingBottom:"10px",
+        "& img":{
+            width: "72px",
+            height: "72px",
+            marginRight: "10px"
+        },
+        "& h1":{
+            fontWeight: theme.typography.fontWeightRegular,
+
+        }
+    },
+    info:{
+        marginTop: "10px",
+        "& a img":{
+            width: "17px",
+            height: "auto",
+            padding:"0"            
+        }
+    },
+    body:{
+        width: "90%",
+        margin: "auto",     
+        "& table":{
+            marginTop: "20px",
+            textAlign: "left",
+            borderCollapse: "collapse",
+            width: "100%",
+        },
+        "& table tr":{
+            marginRight: "20px",
+            borderBottom: "1px solid rgb(175, 175, 175)",
+            padding: "15px 15px 15px 0px",
+            "& td, & th":{
+                fontWeight: theme.typography.fontWeightRegular,      
+                padding: "10px",
+                borderBottom: `1px solid ${theme.palette.primary.light}`
+            }
+        },
+
+    },
+    
+    successColumn:{
+        fontSize: theme.typography.fontSize,
+        padding: "5px",
+        borderRadius: "10px",
+        verticalAlign: "top",
+        marginLeft:"5px",
+        fontWeight: theme.typography.fontWeightMedium,
+    },
+    success:{
+        color: theme.palette.success.main,
+        backgroundColor: theme.palette.success.light,   
+    },
+    failed:{
+        color: theme.palette.error.main,
+        backgroundColor: theme.palette.error.light,
+    },
+    upcoming:{
+        color: theme.palette.warning.main,
+        backgroundColor: theme.palette.warning.light,
+    }
+}))
+
+
+
+function LaunchDisplay({open, onClose, launchData, isLoading}) {
+    const classes = useStyles()
+
+    let labelClass = launchData.upcoming? classes.upcoming:
+                    (launchData.success? classes.success: classes.failed)   
     //Accessing the columns for the launch
     const COLUMNS = COLUMNS_LAUNCH
 
@@ -19,8 +122,6 @@ function LaunchDisplay({open, onClose, launchData, isLoading}) {
 
     const {
         getTableProps, 
-        getTableBodyProps,
-        headerGroups,
         rows,
         prepareRow,
     } = tableInstance
@@ -33,18 +134,25 @@ function LaunchDisplay({open, onClose, launchData, isLoading}) {
         >
             {!isLoading && launchData.name?
 
-            <div className="launchView">
-                <div className="headerLaunch">
+            <Paper 
+            classes={{root:classes.launchView}}
+                elevation={2}
+            >
+                <div className={classes.headerView}>
                     <img src={launchData.links.patch.small} />
-                    <div className="info">
-                        <h1>{launchData.name}</h1>
+                    <div className={classes.info}>
+                        <h1>{launchData.name}
+                        {console.log(launchData.success)}
+                        <span className={`${classes.successColumn} ${labelClass}`}>
+                                {launchData.successLabel}
+                            </span></h1>
                         <h6>{launchData.rocket.name}</h6>
                         {launchData.links.article? <a href={launchData.links.article} target="_blank"><img  src="/img/spacex.png"/></a>:""}
                         {launchData.links.wikipedia?  <a href={launchData.links.wikipedia} target="_blank"><img  src="/img/wiki.png"/></a>:""}
                         {launchData.links.webcast? <a href={launchData.links.webcast} target="_blank"><img  src="/img/youtube.png"/></a>:""}
                     </div>
                 </div>
-                <div className="body">
+                <div className={classes.body}>
                     {launchData.details?
                     <p>
                         {launchData.details} 
@@ -53,52 +161,30 @@ function LaunchDisplay({open, onClose, launchData, isLoading}) {
                     :""
                     }
 
-                    {/* Rendering a table using react-table. Making it vertical with style. */}
 
                     <table  {...getTableProps()}>
-                        <thead>
-                            {
-                                headerGroups.map((headerGroup)=>{
-                                    return(
-                                    <tr {...headerGroup.getHeaderGroupProps()}>
-                                        {
-                                            headerGroup.headers.map((column)=>{
-                                                return(
-                                                    <th {...column.getHeaderProps()}>
-                                                        {column.render('Header')}
-                                                    </th>
-                                                )
-                                            })
-                                        }
-                                    </tr>)
-                                })
-                            }
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
                             {
                                 rows.map((row)=>{
                                     prepareRow(row)
+                                    return row.cells.map((cell)=>{
+
                                     return(
-                                        <tr {...row.getRowProps()}>
-                                            {
-                                                row.cells.map((cell)=>{
-                                                    return(
-                                                        <td {...cell.getCellProps()}>
-                                                            {cell.render('Cell')}
-                                                        </td>
-                                                    )
-                                                })
-                                            }
-                                            <br />
+                                        <tr {...row.getRowProps()} >
+                                                <th>
+                                                    {cell.column.Header}
+                                                </th>
+                                                <td {...cell.getCellProps()}>
+                                                    {cell.render('Cell')}
+                                                </td>
                                         </tr>
-                                    )
+                                         )
+                                    })
                                 })
                             }
-                        </tbody>
 
                     </table>
                 </div>
-            </div>:
+            </Paper>:
             ""}
         </Modal>
     )

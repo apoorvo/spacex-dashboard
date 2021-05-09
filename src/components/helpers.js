@@ -1,6 +1,57 @@
 // This is a helper file used for common usecases like getting the query for the API call, checking validity of the URL 
 // and any further usecases arriving in the future
 
+//For DateRangePicker
+import { addDays, addMonths, addYears } from 'date-fns';
+import { createStaticRanges } from 'react-date-range';
+ //Creating Custom Static Ranges for the DateRangePicker
+ export const staticRanges = [...createStaticRanges([
+    {
+        label: "Past Week",
+        range: ()=>({
+            startDate: addDays(new Date(),-7),
+            endDate: new Date(),
+        })    
+    },
+    {
+        label: "Past Month",
+        range: ()=>({
+            startDate: addMonths(new Date(),-1),
+            endDate: new Date(),
+        })    
+    },
+    {
+        label: "Past 3 Months",
+        range: ()=>({
+            startDate: addMonths(new Date(),-3),
+            endDate: new Date(),
+        })    
+    },
+    {
+        label: "Past 6 Months",
+        range: ()=>({
+            startDate: addMonths(new Date(),-6),
+            endDate: new Date(),
+        })    
+    },
+    {
+        label: "Past Year",
+        range: ()=>({
+            startDate: addYears(new Date(),-1),
+            endDate: new Date(),
+        })    
+    },
+    {
+        label: "Past 2 Years",
+        range: ()=>({
+            startDate: addYears(new Date(),-2),
+            endDate: new Date(),
+        })    
+    },
+
+])
+]
+
 //The names of the filters to be applied
 //Only one can be applied at the time as applying upcoming filter will return docs
 //with a null value for success.

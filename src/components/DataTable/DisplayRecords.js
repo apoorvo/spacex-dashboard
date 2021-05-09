@@ -1,7 +1,7 @@
-import DisplayTableData from "./DataTable/DisplayTableData"
-import COLUMNS from './DataTable/COLUMNS'
+import DisplayTableData from "./DisplayTableData"
+import COLUMNS from './COLUMNS'
 import React, { useMemo} from 'react'
-import LaunchDisplay from "./DataTable/LaunchDisplay"
+import LaunchDisplay from "./LaunchDisplay"
 
 
 
@@ -16,10 +16,9 @@ function DisplayRecords({launches, isLoading, hasError}){
         const rowData= launches.map((row)=>{
           const newRow = {...row}
           if(newRow.upcoming){
-            newRow.success_label = "Upcoming"
-            return newRow
+            newRow.successLabel = "Upcoming"
           }else{
-            newRow.success_label= newRow.success? "Succesful": "Failure"
+            newRow.successLabel= newRow.success? "Succesful": "Failed"
           }
           let [date,time] = newRow.date_utc.split("T")
           time = time.split(":").slice(0,2).join(":")
