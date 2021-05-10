@@ -2,6 +2,7 @@
 > A dashboard for SpaceX API V4
 
 ## Deployment Link
+The project has been deployed on Heroku.
 The live project can be found [here.](https://bigbinary-spacex-apoorvo.herokuapp.com/)
 
 ## Approach
