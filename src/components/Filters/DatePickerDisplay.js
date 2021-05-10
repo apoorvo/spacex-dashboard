@@ -92,7 +92,8 @@ function DatePickerDisplay({range, page, history, searchObj}) {
         setOpen(false)
     }
 
-    const handleClick = ()=>{
+    const handleClick = (e)=>{
+        console.log(e.preventDefault())
         setOpen(true)
     }
 
@@ -109,7 +110,7 @@ function DatePickerDisplay({range, page, history, searchObj}) {
             />
             <select 
                 value={currentLabel}
-                onClick={handleClick}
+                onMouseDown={handleClick}
                 id="#rangeInput"
             >
                 {staticLabels}
