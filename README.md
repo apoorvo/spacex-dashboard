@@ -8,7 +8,7 @@ The live project can be found [here.](https://bigbinary-spacex-apoorvo.herokuapp
 
 ## Approach
 To make sure the URL were shareable, the query was infered from the URL and the filters were used to change the filters.  
-**URL pattern** */:page/:dateRange?filterName=filterValue*
+**URL pattern** */:page/:startDate_endDate?filterName=filterValue*
 
 ## Tech Stack
 **Build with:**
