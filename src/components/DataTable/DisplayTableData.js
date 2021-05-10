@@ -1,8 +1,8 @@
 import { CircularProgress, makeStyles, Typography, Paper } from '@material-ui/core'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useTable } from 'react-table'
 import LaunchDisplay from './LaunchDisplay'
+import MessageBoard from './MessageBoard'
 
 const useStyles = makeStyles((theme)=>({
     progressRoot:{
@@ -10,11 +10,15 @@ const useStyles = makeStyles((theme)=>({
         top: "45%",
         left: "48%",
         color: theme.palette.primary.light
+        
     },
     noResultRoot:{
+        fontFamily:theme.typography.fontFamily,
         fontWeight: 400,
     },
     data_table:{
+        fontFamily:theme.typography.fontFamily,
+        fontSize: theme.typography.fontSize,
         width: "100%",
         textAlign: "left",
         borderCollapse: "collapse",
@@ -31,13 +35,13 @@ const useStyles = makeStyles((theme)=>({
     },
     successColumn:{
         fontSize: theme.typography.fontSize,
-        fontWeight: theme.typography.fontWeightBold,
+        fontWeight: theme.typography.fontWeightMedium,
         "& p":{
             textAlign:"center",
             borderRadius: "10px",
-            width:"60%",
+            width:"75%",
             margin:"auto",
-            padding: "5px 2px 5px 2px"
+            padding: "5px 5px 5px 5px"
         }
     },
     success:{
@@ -170,45 +174,6 @@ function DisplayTableData({columns, data, isLoading, hasError}){
   }
 
  
-function MessageBoard({rowsLength, isLoading, hasError, columnsLength, classes}){
-    if(!isLoading){
-        if(hasError){
-            return(
-                <tr>
-                    <td colSpan={columnsLength} valign="top" align="center">
-                    <Typography
-                        variant="h6"
-                        component="h6"
-                        classes={{h6:classes}}
-                    >
-                        Error fetching records.
-                    </Typography>
-                    </td>
-                </tr>
-            )
-        }else if(rowsLength<=0){
-            return(
-                <tr>
-                    <td colSpan={columnsLength} valign="top" align="center">
-                    <Typography
-                        variant="h6"
-                        component="h6"
-                        classes={{h6:classes}}
-                    >
-                        No results found for the specified filter
-                    </Typography>
-                    </td>
-                </tr>
-            )
-        }else{
-            return ""
-        }
-    }else{
-        return ""
-    }
 
-   
-        
-}
 
 export default DisplayTableData

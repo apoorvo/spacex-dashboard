@@ -15,12 +15,16 @@ import { Grid, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme)=>({
     filterBar:{
+        fontFamily: theme.typography.fontFamily,
         "& select":{
             border: "0",
             marginBottom: "20px",
             color:theme.palette.secondary.main,
             fontFamily: theme.typography.fontFamily,
-            fontWeight: theme.typography.fontWeightMedium
+            fontWeight: theme.typography.fontWeightMedium,
+            "& option:hover":{
+                color: "red"
+            }
         }
     }
 }))

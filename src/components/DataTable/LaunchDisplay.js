@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme)=>({
     launchView:{
         color: theme.palette.primary.main,
         fontFamily: theme.typography.fontFamily,
+        fontSize: theme.typography.fontSize,
         width: "500px",
         maxHeight: "600px",
         overflowY:"auto",
@@ -139,29 +140,28 @@ function LaunchDisplay({open, onClose, launchData, isLoading}) {
                 elevation={2}
             >
                 <div className={classes.headerView}>
-                    <img src={launchData.links.patch.small} />
+                    {launchData.links.patch.small? <img src={launchData.links.patch.small} alt="Flight logo" />:""}
                     <div className={classes.info}>
                         <h1>{launchData.name}
-                        {console.log(launchData.success)}
                         <span className={`${classes.successColumn} ${labelClass}`}>
                                 {launchData.successLabel}
                             </span></h1>
                         <h6>{launchData.rocket.name}</h6>
-                        {launchData.links.article? <a href={launchData.links.article} target="_blank"><img  src="/img/spacex.png"/></a>:""}
-                        {launchData.links.wikipedia?  <a href={launchData.links.wikipedia} target="_blank"><img  src="/img/wiki.png"/></a>:""}
-                        {launchData.links.webcast? <a href={launchData.links.webcast} target="_blank"><img  src="/img/youtube.png"/></a>:""}
+                        {launchData.links.article? <a href={launchData.links.article} target="_blank"><img  src="/img/spacex.png" alt="article"/></a>:""}
+                        {launchData.links.wikipedia?  <a href={launchData.links.wikipedia} target="_blank"><img  src="/img/wiki.png" alt="wikipedia"/></a>:""}
+                        {launchData.links.webcast? <a href={launchData.links.webcast} target="_blank"><img  src="/img/youtube.png" alt="youtube"/></a>:""}
                     </div>
                 </div>
                 <div className={classes.body}>
                     {launchData.details?
                     <p>
                         {launchData.details} 
-                        <a href={launchData.links.wikipedia}>Wikipedia</a>
+                        <a href={launchData.links.wikipedia} target="_blank"> Wikipedia</a>
                     </p>
                     :""
                     }
 
-
+                    {/* Displaying a vertical table */}
                     <table  {...getTableProps()}>
                             {
                                 rows.map((row)=>{

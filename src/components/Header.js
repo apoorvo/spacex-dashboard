@@ -1,4 +1,4 @@
-import { makeStyles, Paper, Grid } from '@material-ui/core'
+import { makeStyles, Paper } from '@material-ui/core'
 import React from 'react'
 
 const useStyles = makeStyles({
@@ -18,7 +18,7 @@ function Header() {
     const classes = useStyles()
     return (
         <Paper className={classes.header} square={true}>
-         <img src={"/img/logo.png"}/>   
+         <img src={"/img/logo.png"} alt="SpaceX Logo"/>   
         </Paper>
     )
 }

@@ -1,7 +1,6 @@
 import DisplayTableData from "./DisplayTableData"
 import COLUMNS from './COLUMNS'
 import React, { useMemo} from 'react'
-import LaunchDisplay from "./LaunchDisplay"
 
 
 
@@ -12,6 +11,7 @@ function DisplayRecords({launches, isLoading, hasError}){
     },[])
 
     // Success_label is added to the data to display Success field in the table
+    // Launch date is formated as well
     const data = useMemo(()=>{
         const rowData= launches.map((row)=>{
           const newRow = {...row}

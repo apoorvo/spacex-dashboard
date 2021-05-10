@@ -5,6 +5,7 @@ import { Grid } from '@material-ui/core';
 function Filters({page, range, searchObj, location, history}) {
     const [filterSelected, setFilterSelected ]= useState("")
 
+    // Infering the range from url and setting label
     useEffect(() => {
         filterNames.forEach((filterName)=>{
             if(searchObj.has(filterName)){
