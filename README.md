@@ -1,4 +1,4 @@
-# SpaceX Lauch Dashboards
+# SpaceX Lauch Dashboards :rocket:
 > A dashboard for SpaceX API V4
 
 ## Deployment Link
