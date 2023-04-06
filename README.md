@@ -4,7 +4,7 @@
 ## Deployment Link
 The project has been deployed on Heroku.
 The project is currently not responsive and best viewed on 1920X1080 screens.  
-The live project can be found [here.](https://bigbinary-spacex-apoorvo.herokuapp.com/)
+The live project can be found [here.](https://spacex-dashboard-apoorvo.onrender.com)
 
 ## Approach
 To make sure the URL were shareable, the query was infered from the URL and the filters were used to change the filters.  
